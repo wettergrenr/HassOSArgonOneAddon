@@ -1,7 +1,7 @@
-name: ArgonOne V3 Active Linear Cooling
+name: ArgonOne V3 Active Linear Cooling - TronickDev Test
 version: 30a
 slug: argon_one_v3_temp_linear
-description: Actively keeping your ArgonOne V3 cool.
+description: Actively keeping your ArgonOne V3 cool. TronickDev test build.
 arch:
   - armhf
   - armv7
