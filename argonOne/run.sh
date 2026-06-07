@@ -79,8 +79,10 @@ fanSpeedReport(){
 
   exec 3<>/dev/tcp/hassio/80
   echo -ne "POST /homeassistant/api/states/sensor.argon_one_addon_fan_speed HTTP/1.1\r\n" >&3
+  echo -ne "Host: hassio\r\n" >&3
   echo -ne "Connection: close\r\n" >&3
   echo -ne "Authorization: Bearer ${SUPERVISOR_TOKEN}\r\n" >&3
+  echo -ne "Content-Type: application/json\r\n" >&3
   echo -ne "Content-Length: $(echo -ne "${reqBody}" | wc -c)\r\n" >&3
   echo -ne "\r\n" >&3
   echo -ne "${reqBody}" >&3
