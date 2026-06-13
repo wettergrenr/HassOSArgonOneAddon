@@ -1,0 +1,4 @@
+# Use a custom markdownlint style configuration for this repository.
+# This allows us to keep MD013 enabled, but with a project-specific
+# line length limit instead of disabling the rule completely.
+style '.mdl.rb'
