@@ -2,6 +2,7 @@
 
 | Version | Change                                                   |
 | ------- | -------------------------------------------------------- |
+| **31**  | Fix for the missing header error                         |
 | **30**  | Fix for missing fanspeed indicator in HA                 |
 | **29b** | Incrementing version only.                               |
 | **28**  | Moved into a new addon for compatibility in the future.  |

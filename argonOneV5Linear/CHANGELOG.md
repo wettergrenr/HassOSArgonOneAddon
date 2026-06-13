@@ -2,6 +2,7 @@
 
 | Version | Change                                                   |
 | ------- | -------------------------------------------------------- |
+| **51**  | Fix for the missing header error                         |
 | **50**  | Add support for Argon One V5 Linear Cooling              |
 | **--**  | (Versions 31-49 skipped to align with V5 release)        |
 | **30**  | Fix for missing fanspeed indicator in HA                 |

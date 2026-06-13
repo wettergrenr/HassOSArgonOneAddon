@@ -2,6 +2,7 @@
 
 | Version | Change                                                   |
 | ------- | -------------------------------------------------------- |
+| **31**  | Fix for the missing header error                         |
 | **30**  | Fix for missing fanspeed indicator in HA                 |
 | **29**  | Detection for Argon One Neo                              |
 | **27**  | Faster fanspeed update                                   |

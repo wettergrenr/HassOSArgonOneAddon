@@ -1,6 +1,6 @@
 name: ArgonOne Active Cooling
 image: adamoutler/{arch}-hassosargonone
-version: 30a
+version: 31a
 slug: argon_one_temp
 description: Actively keeping your Argon One cool.
 arch:
