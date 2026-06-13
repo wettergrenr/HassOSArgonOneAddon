@@ -1,6 +1,3 @@
-# Enable all default markdownlint rules.
-all
-
 # MD013 checks the maximum line length in Markdown files.
 # The original 80-character limit is too strict for this repository because
 # the documentation contains links, image references and Home Assistant
