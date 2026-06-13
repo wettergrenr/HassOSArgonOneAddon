@@ -20,8 +20,6 @@ Because the Argon ONE V5 connects its fan directly to the Raspberry Pi 5's dedic
 
 To change the fan curve, you must edit the `/boot/firmware/config.txt` file directly on your Home Assistant OS host and use properties such as `dtparam=fan_temp0=...`. This add-on operates in Observer Mode and will faithfully report whatever speed the kernel decides.
 
-
-
 ## Support
 
 Need support? Click [here](https://community.home-assistant.io/t/argon-one-active-cooling-addon/262598/8).
