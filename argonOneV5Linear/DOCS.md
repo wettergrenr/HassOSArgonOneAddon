@@ -16,11 +16,10 @@ Choose Celsius or Fahrenheit.
 
 ## Changing the Fan Curve
 
-Because the Argon ONE V5 connects its fan directly to the Raspberry Pi 5's dedicated PWM fan header, the fan speed is controlled natively by the Linux kernel's thermal governor. 
+Because the Argon ONE V5 connects its fan directly to the Raspberry Pi 5's dedicated PWM fan header, the fan speed is controlled natively by the Linux kernel's thermal governor.
 
-To change the fan curve, you must edit the `/boot/firmware/config.txt` file directly on your Home Assistant OS host and use properties such as `dtparam=fan_temp0=...`. This add-on operates in Observer Mode and will faithfully report whatever speed the kernel decides.
-
-
+To change the fan curve, you must edit the `/boot/firmware/config.txt` file directly on your Home Assistant OS host and use properties such as `dtparam=fan_temp0=...`.
+This add-on operates in Observer Mode and will faithfully report whatever speed the kernel decides.
 
 ## Support
 

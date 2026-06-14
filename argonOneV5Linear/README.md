@@ -9,7 +9,8 @@ It displays fan behavior in Home Assistant, but kernel-native fan control remain
 
 This Addon keeps an eye on your Argon ONE V5 case temperatures!
 
-Unlike previous versions, the Argon ONE V5 case connects its fan directly to the Raspberry Pi 5's dedicated PWM fan header. This means the Linux kernel's thermal governor natively and automatically controls the fan speed based on your CPU temperature.
+Unlike previous versions, the Argon ONE V5 case connects its fan directly to the Raspberry Pi 5's dedicated PWM fan header. 
+This means the Linux kernel's thermal governor natively and automatically controls the fan speed based on your CPU temperature.
 
 Because of this native integration, this Addon acts as an **Observer**. It securely reads the current fan speed and CPU temperature directly from the OS kernel without modifying it, and reports this data to Home Assistant.
 
@@ -27,4 +28,5 @@ Also, enable the "Log current temperature every 30 seconds" setting and look in 
  different speeds, but logging will verify any changes.
 
 Need support? Click [here](https://community.home-assistant.io/t/argon-one-active-cooling-addon/262598/8).
-When reporting issues, please provide as much relevant information as possible to help us assist you. Useful details include any error messages from the logs, steps to reproduce the behavior, and information about your host environment (e.g., Home Assistant OS version).
+When reporting issues, please provide as much relevant information as possible to help us assist you. 
+Useful details include any error messages from the logs, steps to reproduce the behavior, and information about your host environment (e.g., Home Assistant OS version).

@@ -110,8 +110,8 @@ actionLinear() {
   return 0
 }
 
-tmini=0
-tmaxi=0
+#tmini=0 - is no where used - left over?
+#tmaxi=0 - is no where used - left over?
 CorF=$(jq -r '."Celsius or Fahrenheit"'<options.json)
 createEntity=$(jq -r '."Create a Fan Speed entity in Home Assistant"' <options.json)
 logTemp=$(jq -r '."Log current temperature every 30 seconds"' <options.json)
@@ -139,7 +139,7 @@ until false; do
     unit="F"
   fi
 
-  value=$cpuTemp
+  #value=$cpuTemp - is no where used - left over?
   test "${logTemp}" == "true" && echo "Current Temperature = $cpuTemp °$unit"
   actionLinear "" "${cpuTemp}" "${CorF}"
   sleep 30
