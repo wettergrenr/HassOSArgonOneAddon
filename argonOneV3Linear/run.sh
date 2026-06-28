@@ -102,6 +102,60 @@ actionLinear() {
 }
 
 
+## Watch for power button press on GPIO4 and trigger a graceful HA host shutdown.
+## The Argon ONE V3 MCU signals a button press with a brief (~20ms) HIGH pulse on
+## GPIO4 (rising then falling edge). libgpiod v2 syntax is required — v1 flags
+## (--falling-edge, --num-events) are silently no-ops on v2 and the watcher never fires.
+## After the OS halts, the MCU cuts board power via its internal countdown timer
+## (i2cset 0x86 0x01), which fires ~17.5s after the command regardless of GPIO state.
+watchPowerButton() {
+    if ! command -v gpiomon &>/dev/null; then
+        echo "gpiomon not found - power button monitoring disabled"
+        return
+    fi
+    if [ ! -e /dev/gpiochip0 ]; then
+        echo "/dev/gpiochip0 not accessible - power button monitoring disabled"
+        return
+    fi
+    # Print version once so the installed libgpiod release is visible in the add-on log
+    echo "gpiomon version: $(gpiomon --version 2>&1 | head -1)"
+    echo "Power button watcher started (gpiochip0 line 4, rising edge)"
+    while true; do
+        # libgpiod v2 syntax: -c <chip>  -e <edge>  -n <count>  <line-offset>
+        if gpiomon -c gpiochip0 -e rising -n 1 4 2>/dev/null; then
+            echo "Power button press detected (rising edge on GPIO4) - debounce check..."
+            # Debounce: require the MCU pulse to complete (falling edge) within 1s.
+            # A real ~20ms pulse produces the falling edge almost immediately; stuck-high
+            # lines and single-edge noise spikes time out and are ignored.
+            if ! timeout 1 gpiomon -c gpiochip0 -e falling -n 1 4 2>/dev/null; then
+                echo "Power button debounce: no falling edge within 1s - ignoring spurious event"
+                continue
+            fi
+            echo "Power button confirmed (complete rising+falling pulse detected)"
+            # hassio_role: manager is required for POST /host/shutdown (HA Supervisor API).
+            # HTTP 200 = accepted; HTTP 403 = role insufficient (verify hassio_role: manager
+            # in config.yaml). Log the status code so any auth failure is visible.
+            echo "Requesting host shutdown: POST http://supervisor/host/shutdown"
+            http_status=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+                -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
+                "http://supervisor/host/shutdown")
+            echo "Supervisor shutdown response: HTTP ${http_status}"
+            if [ "${http_status}" != "200" ]; then
+                echo "WARNING: Shutdown returned HTTP ${http_status}; expected 200. Verify hassio_role: manager in config.yaml."
+            fi
+            # Start MCU power-cut countdown (~17.5s hardcoded in firmware).
+            # Register 0x86, value 0x01 is the only valid command; the MCU cuts
+            # board power completely after the countdown regardless of GPIO state.
+            # The OS halt (above) completes well within the window.
+            echo "Starting Argon MCU power-cut countdown (~17.5s): i2cset -y 1 0x1a 0x86 0x01"
+            i2cset -y "${port}" 0x1a 0x86 0x01
+            break  # Shutdown triggered; exit the watcher loop
+        fi
+        # Prevent a tight spin if gpiomon exits unexpectedly (e.g. chip busy)
+        sleep 1
+    done
+}
+
 tmini=$(jq -r '."Minimum Temperature"' <options.json)
 tmaxi=$(jq -r '."Maximum Temperature"'<options.json)
 CorF=$(jq -r '."Celsius or Fahrenheit"'<options.json)
@@ -118,8 +172,11 @@ echo "Detecting Layout of i2c, we expect to see \"1a\" here."
 calibrateI2CPort;
 port=${thePort};
 echo "I2C Port ${port}";
-#Trap exits and set fan to 100% like a safe mode.
-trap 'echo "Failed ${LINENO}: $BASH_COMMAND";i2cset -y ${port} 0x01a 0x63;previousFanLevel=-1;fanLevel=-1; echo Safe Mode Activated!;' ERR EXIT INT TERM
+
+# Start power-button watcher in background; kill it cleanly on any exit
+watchPowerButton &
+BUTTON_PID=$!
+trap 'echo "Failed ${LINENO}: $BASH_COMMAND"; kill "${BUTTON_PID}" 2>/dev/null; i2cset -y ${port} 0x01a 0x63; previousFanLevel=-1; fanLevel=-1; echo "Safe Mode Activated!";' ERR EXIT INT TERM
 
 
 

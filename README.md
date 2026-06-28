@@ -1,48 +1,49 @@
-![image](gitResources/activecooling.jpg)
+# ArgonOne V3 — Home Assistant Add-on
 
-This Addon enables and activates automated active cooling. It communicates over i2c.
+**Fan control and power-button shutdown for the Argon ONE V3 case with Raspberry Pi 5.**
 
-# Installation
+This is a community fork of [adamoutler's HassOSArgonOne add-on](https://github.com/adamoutler/HassOSArgonOneAddon),
+patched for the Argon ONE V3 + Raspberry Pi 5 + Home Assistant OS.
 
-Within HA
+---
 
-1. Pre-req: you must enable i2C first. See instructions [below](#enable-i2c).
-1. Click Supervisor.
-1. Click Add-on Store.
-1. Click the … button (in top left).
-1. Add this Repository URL.
+## What This Add-on Does
 
-Click ArgonOne Temp Control and install.
+- **Fan control** — linearly adjusts fan speed between your min and max temperature
+- **Power button** — press once for a graceful Home Assistant shutdown
+- The case cuts power cleanly after shutdown completes
 
-![image](gitResources/addonSelect.png)
+---
 
-# Configuration
+## Requirements
 
-![image](gitResources/Configuration.png)
+- Argon ONE **V3** case
+- Raspberry Pi **5**
+- Home Assistant OS **18** or newer
+- I2C and UART enabled (see [DOCS.md](argonOneV3Linear/DOCS.md))
 
-## Celsius or Fahrenheit
+---
 
-Choose Celsius or Fahrenheit.
+## Quick Start
 
-- **Celsius or Fahrenheit** - Configures Celsius or Fahrenheit.
+1. **Enable I2C and UART** — follow [Step 1 in DOCS.md](argonOneV3Linear/DOCS.md#step-1-enable-i2c-and-uart)
+2. **Add this repository** to the HA Add-on Store:
+   `https://github.com/wettergrenr/HassOSArgonOneAddon`
+3. **Install** ArgonOne V3 Active Linear Cooling
+4. **Configure** your temperature range and start the add-on
 
-## Temperature Ranges
+---
 
-![image](gitResources/argonlinear.png)
+## Optional: Patched Firmware
 
-Set your fan ranges appropriately.
+A patched MCU firmware is available as a download.
 
-- **Minimum Temperature** Lower temperatures will turn the fan off.
-- **Maximum Temperature** The temperature at which the fan operates at 100%.
+It gives the system more time to shut down cleanly before the case cuts power.
 
-# Enable I2C
+See [DOCS.md](argonOneV3Linear/DOCS.md) for the download link and flashing instructions.
 
-In order to enable i2C, you must follow one of the methods below.
+---
 
-## The easy way
+## Support
 
-[Use the addon](https://community.home-assistant.io/t/add-on-hassos-i2c-configurator/264167)
-
-## The official way
-
-[Use the guide](https://www.home-assistant.io/common-tasks/os#enable-i2c)
+[Community thread](https://community.home-assistant.io/t/argon-one-active-cooling-addon/262598/)

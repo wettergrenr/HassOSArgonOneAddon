@@ -1,11 +1,7 @@
----
+# Changelog
 
-| Version | Change                                                   |
-| ------- | -------------------------------------------------------- |
-| **31**  | Fix for the missing header error                         |
-| **30**  | Fix for missing fanspeed indicator in HA                 |
-| **29**  | Detection for Argon One Neo                              |
-| **27**  | Faster fanspeed update                                   |
-| **27**  | Faster fanspeed update                                   |
-| **26**  | Fix fan speed indicator                                  |
-| **25**  | Thanks byod0! New linear fan control addon! forked v24.0 |
+| Version | Change |
+| ------- | ------ |
+| **666** | Graceful power-button shutdown (GPIO4 watcher + MCU power-cut command). I2C and UART setup guide. Optional patched firmware for a longer shutdown timer. |
+
+Based on [adamoutler's HassOSArgonOne add-on](https://github.com/adamoutler/HassOSArgonOneAddon), community-patched for Argon ONE V3 + Raspberry Pi 5 + HAOS.

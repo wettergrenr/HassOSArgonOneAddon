@@ -1,5 +1,5 @@
 name: ArgonOne V3 Active Linear Cooling
-version: 31a
+version: 666
 slug: argon_one_v3_temp_linear
 description: Actively keeping your ArgonOne V3 cool.
 arch:
@@ -8,9 +8,11 @@ arch:
   - aarch64
 auth_api: true
 homeassistant_api: true
-hassio_role: homeassistant
+hassio_role: manager
 hassio_api: true
+init: false
 devices:
+  - /dev/gpiochip0
   - /dev/i2c-0
   - /dev/i2c-1
   - /dev/i2c-2
@@ -47,9 +49,9 @@ map:
   - share
   - media
 options:
-  Celsius or Fahrenheit: F
-  Minimum Temperature: 130
-  Maximum Temperature: 150
+  Celsius or Fahrenheit: C
+  Minimum Temperature: 55
+  Maximum Temperature: 65
   Create a Fan Speed entity in Home Assistant: false
   Log current temperature every 30 seconds: true
 schema:
